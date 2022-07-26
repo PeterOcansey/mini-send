@@ -8,6 +8,8 @@ use App\Models\EmailTransaction;
 
 class DatabaseTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /**
      * Test an an email transactionn can be created
      *

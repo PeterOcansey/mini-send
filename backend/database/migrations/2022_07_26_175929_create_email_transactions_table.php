@@ -15,6 +15,13 @@ class CreateEmailTransactionsTable extends Migration
     {
         Schema::create('email_transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('uid');
+            $table->string('from');
+            $table->string('to');
+            $table->string('subject');
+            $table->mediumText('content_text')->nullable();
+            $table->longText('content_html')->nullable();
+            $table->string('status')->default('POSTED');
             $table->timestamps();
         });
     }

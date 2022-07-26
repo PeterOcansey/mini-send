@@ -14,11 +14,12 @@ class EmailTransactionFactory extends Factory
     public function definition()
     {
         return [
-            'from' => "ocanseypeter@gmail.com",
-            'to' => "ptodeveloper@gmail.com",
-            'subject' => "Hello mail",
-            'content_text' => "my test content",
-            'content_html' => "<p>my html content</h>",
+            'uid' => $this->faker->uuid(),
+            'from' => $this->faker->unique()->email,
+            'to' => $this->faker->unique()->email,
+            'subject' => $this->faker->realText( $this->faker->numberBetween( 10,20 ) ),
+            'content_text' => $this->faker->text(),
+            'content_html' => $this->faker->randomHtml( 2,3 ),
             'status' => "PENDING" 
         ];
     }
