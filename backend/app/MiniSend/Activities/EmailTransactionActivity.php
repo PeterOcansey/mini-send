@@ -9,10 +9,12 @@ use App\MiniSend\Api\ApiResponse;
 use App\MiniSend\Utils\Constants;
 use Illuminate\Http\Request;
 use App\MiniSend\Traits\ValidatorTrait;
+use App\MiniSEnd\Traits\EmailTrait;
 
 class EmailTransactionActivity 
 {
     use ValidatorTrait;
+    use EmailTrait;
 
     protected EmailTransactionRepo $emailTransactionRepo;
 
@@ -48,7 +50,7 @@ class EmailTransactionActivity
             return $error_response;
         }
 
-        //Generate 
+        $data['uid'] = $this->uid(); 
     }
 
 }

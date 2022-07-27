@@ -2,8 +2,8 @@
     namespace App\MiniSend\Traits;
 
     use Illuminate\Http\Request;
-    use App\Editor\Events\ErrorEvents;
-    use App\Utils\ApiResponse;
+    use App\MiniSend\Events\ErrorEvents;
+    use App\MiniSend\Api\ApiResponse;
     use Validator;
     
     trait ValidatorTrait {
