@@ -1,5 +1,6 @@
 <template>
     <v-container ma-200>
+        <TransactionPaginator/>
         <v-card>
             <TransactionsTable/>
         </v-card>
@@ -8,9 +9,10 @@
 
 <script>
 import TransactionsTable from './TransactionsTable.vue';
+import TransactionPaginator from './TransactionPaginator.vue';
 
 export default {
-  components: { TransactionsTable },
+  components: { TransactionsTable, TransactionPaginator },
 };
 
 </script>
