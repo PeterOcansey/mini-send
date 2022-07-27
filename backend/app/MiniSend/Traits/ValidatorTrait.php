@@ -5,6 +5,7 @@
     use App\MiniSend\Events\ErrorEvents;
     use App\MiniSend\Api\ApiResponse;
     use Validator;
+    use Illuminate\Support\Facades\Log;
     
     trait ValidatorTrait {
 
@@ -14,17 +15,12 @@
     
             if ( $validator->fails() ) 
             {
-                return ApiResponse::validationError( $validator->errors() );
+                return ApiResponse::validationError( ['errors' => $validator->errors()] );
             }
 
-            return null;
-        }
-
-        private function validateRquestEmailContent( Array $data )
-        {
-            if( !isset( $data['content_text'] ) || !isset( $data['content_html'] ) )
+            if( !isset( $data['content_text'] ) && !isset( $data['content_html'] ) )
             {
-                return ApiResponse::validationError( "A text content or html content is required to send a mail" );
+                return ApiResponse::validationError( [], "A text content or html content is required to send a mail" );
             }
 
             return null;

@@ -29,4 +29,9 @@ class EmailTransactionRepo
     {
         return EmailTransaction::where( 'uid', $uid )->first();
     }
+
+    public function saveEmailTransaction( Array $data )
+    {
+        return EmailTransaction::create( $data );
+    }
 }

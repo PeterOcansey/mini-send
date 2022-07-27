@@ -38,19 +38,16 @@ class EmailTransactionActivity
             'to' => 'required|email',
             'subject' => 'required|max:200',
         ] );
+        if( $error_response ) return $error_response;
 
-        if( $error_response )
+        $data['uid'] = $this->uid();
+        
+        if( $emailTransaction = $this->emailTransactionRepo->saveEmailTransaction( $data ) )
         {
-            return $error_response;
+            return ApiResponse::success( "Email posted successfully!", ['data' => $emailTransaction] );
         }
 
-        //Check if we have a text or html content to send
-        if( $error_respoonse = $this->validateRquestEmailContent( $data ) )
-        {
-            return $error_response;
-        }
-
-        $data['uid'] = $this->uid(); 
+        return ApiResponse::generalError( "Something went wrong while trying to post email" );
     }
 
 }
