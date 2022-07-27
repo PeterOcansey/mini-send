@@ -18,4 +18,11 @@ class EmailTransactionActivity
         $this->emailTransactionRepo = $emailTransactionRepo;
     }
 
+    public function listTransactions( $filters )
+    {        
+        $transactions = $this->emailTransactionRepo->getTransactionsPaginated( $filters );
+
+        return ApiResponse::success( "Email transactions retrieved successfully", ['data' => $transactions] );
+    }
+
 }

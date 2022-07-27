@@ -3,12 +3,25 @@
 namespace App\MiniSend\Repos;
 
 use App\Models\EmailTransaction;
+use App\MiniSend\Utils\Constants;
 
 
 class EmailTransactionRepo
 {
-    public function findPropertyById($id)
+    public function getTransactionsPaginated( Array $filters )
     {
-        return EmailTransaction::find($id);
+        $predicate = EmailTransaction::query();
+
+        foreach ( $filters as $key => $filter ) 
+        {
+            if( in_array( $key, Constants::FILTER_PARAM_IGNORE_LIST ) )
+            {
+                continue;
+            }
+    
+            $predicate->where( $key, $filter );
+         }
+
+        return $predicate->paginate( $filters['pageSize'] ?? Constants::DEFAULT_PAGE_SIZE );
     }
 }
