@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="blue">
     <router-view/>
   </v-app>
 </template>
@@ -11,6 +11,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #f5f6f7
 }
 
 nav {
