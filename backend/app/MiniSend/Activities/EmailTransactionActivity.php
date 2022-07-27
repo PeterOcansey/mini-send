@@ -42,6 +42,7 @@ class EmailTransactionActivity
 
         $data['uid'] = $this->uid();
         
+        // Create new email transaction record
         if( $emailTransaction = $this->emailTransactionRepo->saveEmailTransaction( $data ) )
         {
             return ApiResponse::success( "Email posted successfully!", ['data' => $emailTransaction] );
