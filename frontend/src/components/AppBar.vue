@@ -17,6 +17,7 @@
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
+      <ButtonCompose/>
 
       <!-- Tab bar holder-->
       <template v-slot:extension>
@@ -50,6 +51,7 @@
 
 <script>
 import TransactionsHolder from './TransactionsHolder.vue';
+import ButtonCompose from './forms/ButtonCompose.vue';
 
 export default {
   data() {
@@ -64,7 +66,7 @@ export default {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     };
   },
-  components: { TransactionsHolder },
+  components: { TransactionsHolder, ButtonCompose },
 };
 </script>
 
