@@ -38,7 +38,16 @@ class EmailController extends Controller
 
     public function store(Request $request)
     {
-        //
+        try{
+            
+            return $this->emailActivity->sendEmail( $request->post() );
+
+        }catch(\Exception $e){
+
+            ErrorEvents::ServerErrorOccurred($e);
+            return ApiResponse::serverError();
+
+        }
     }
 
     public function show(EmailTransaction $emailTransaction)
