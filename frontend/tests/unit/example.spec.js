@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils';
-import DashboardView from '@/views/DashboardView.vue';
+import TransactionsView from '@/views/TransactionsView.vue';
 
-describe('DashboardView.vue', () => {
+describe('TransactionsView.vue', () => {
   it('renders props.msg when passed', () => {
     const msg = 'new message';
-    const wrapper = shallowMount(DashboardView, {
+    const wrapper = shallowMount(TransactionsView, {
       propsData: { msg },
     });
     expect(wrapper.text()).toMatch(msg);

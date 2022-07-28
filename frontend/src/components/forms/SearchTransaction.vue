@@ -37,18 +37,18 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      valid: false,
-      firstname: '',
-      select: 'By Sender',
+export default {
+  data: () => ({
+    valid: false,
+    firstname: '',
+    select: 'By Sender',
     items: [
-        'By Sender',
-        'By Sender',
-        'By Subject',
+      'By Sender',
+      'By Sender',
+      'By Subject',
     ],
-    }),
-  }
+  }),
+};
 </script>
 
 <style>

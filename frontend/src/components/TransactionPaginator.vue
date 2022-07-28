@@ -15,13 +15,13 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        page: 1,
-      }
-    },
-  }
+export default {
+  data() {
+    return {
+      page: 1,
+    };
+  },
+};
 </script>
 
 <style>

@@ -12,8 +12,8 @@ const routes = [
     component: TransactionsView,
   },
   {
-    path: "/transactions/:id",
-    name: "TransactionDetailView",
+    path: '/transactions/:id',
+    name: 'TransactionDetailView',
     props: true,
     component: TransactionDetailView,
   },

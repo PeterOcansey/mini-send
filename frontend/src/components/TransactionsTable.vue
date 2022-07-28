@@ -155,10 +155,10 @@ export default {
     viewTransactionDetails(transaction) {
       console.log(transaction);
       this.$router.push({
-        name: "TransactionDetailView",
-        params: { transaction: transaction },
+        name: 'TransactionDetailView',
+        params: { id: transaction.uid },
       });
-    }
+    },
   },
 };
 </script>
