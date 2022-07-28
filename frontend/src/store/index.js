@@ -39,7 +39,8 @@ export default new Vuex.Store({
       commit('SET_LOADING', true);
       return EmailService.getEmails()
         .then((response) => {
-          commit('SET_EMAILS', response.data);
+          console.log(response.data.data.data);
+          commit('SET_EMAILS', response.data.data.data);
           commit('SET_LOADING', false);
         })
         .catch((error) => {
@@ -63,56 +64,3 @@ export default new Vuex.Store({
     },
   },
 });
-
-// export default createStore({
-//   state: {
-//     emails: [],
-//     email: null,
-//   },
-//   mutations: {
-//     ADD_EMAIL(state, email) {
-//       state.emails.push(email);
-//     },
-//     SET_EMAILS(state, emails) {
-//       state.emails = emails;
-//     },
-//     SET_EMAIL(state, email) {
-//       state.email = email;
-//     },
-//   },
-//   actions: {
-//     createEmail({ commit }, email) {
-//       return EmailService.postEmail(email)
-//         .then(() => {
-//           commit('ADD_EMAIL', email);
-//           commit('SET_EMAIL', email);
-//         })
-//         .catch((error) => {
-//           throw error;
-//         });
-//     },
-//     fetchEmails({ commit }) {
-//       return EmailService.getEmails()
-//         .then((response) => {
-//           commit('SET_EMAILS', response.data);
-//         })
-//         .catch((error) => {
-//           throw error;
-//         });
-//     },
-//     fetchEmail({ commit }, id) {
-//       const savedEmail = this.state.emails.find((email) => email.id === id);
-//       if (savedEmail) {
-//         commit('SET_EMAIL', savedEmail);
-//         return savedEmail;
-//       }
-//       return EmailService.getEmail(id)
-//         .then((response) => {
-//           commit('SET_EMAIL', response.data);
-//         })
-//         .catch((error) => {
-//           throw error;
-//         });
-//     },
-//   },
-// });

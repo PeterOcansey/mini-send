@@ -32,7 +32,7 @@
           <td class="text-left">{{ transaction.to }}</td>
           <td class="text-left">{{ transaction.subject }}</td>
           <td class="text-left">{{ transaction.status }}</td>
-          <td class="text-left">{{ transaction.date }}</td>
+          <td class="text-left">{{ transaction.created_at }}</td>
         </tr>
       </tbody>
     </template>
