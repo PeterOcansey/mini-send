@@ -12,6 +12,7 @@ import TransactionsTable from './TransactionsTable.vue';
 import TransactionPaginator from './TransactionPaginator.vue';
 
 export default {
+  props: ['emails'],
   components: { TransactionsTable, TransactionPaginator },
 };
 

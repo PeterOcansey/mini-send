@@ -17,7 +17,9 @@
 
   <v-container ma-200 id="mini-send-transaction-detail-holder">
     <BackButton/>
-    <p class="mini-send-transaction-detail-subject">Re: Get the task done, Kid, before I chop off your head.</p>
+    <p class="mini-send-transaction-detail-subject">
+      Re: Get the task done, Kid, before I chop off your head.
+    </p>
     <p class="mini-send-transaction-detail-address">Peter Ocansey</p>
     <p class="mini-send-transaction-detail-address">To: ocanseypeter@gmail.com</p>
     <v-divider></v-divider>

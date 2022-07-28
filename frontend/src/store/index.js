@@ -1,55 +1,118 @@
-import { createStore } from 'vuex'
-import EmailService from '@/services/EmailService'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import EmailService from '@/services/EmailService';
 
-export default createStore({
+Vue.use(Vuex);
+
+export default new Vuex.Store({
   state: {
     emails: [],
-    email: null
+    email: null,
+    loading: true,
   },
   mutations: {
     ADD_EMAIL(state, email) {
-      state.emails.push(email)
+      state.emails.push(email);
     },
     SET_EMAILS(state, emails) {
-      state.emails = emails
+      state.emails = emails;
     },
     SET_EMAIL(state, email) {
-      state.email = email
-    }
+      state.email = email;
+    },
+    SET_LOADING(state, status) {
+      state.loading = status;
+    },
   },
   actions: {
     createEmail({ commit }, email) {
       return EmailService.postEmail(email)
         .then(() => {
-          commit('ADD_EMAIL', email)
-          commit('SET_EMAIL', email)
+          commit('ADD_EMAIL', email);
+          commit('SET_EMAIL', email);
         })
-        .catch(error => {
-          throw error
-        })
+        .catch((error) => {
+          throw error;
+        });
     },
     fetchEmails({ commit }) {
+      commit('SET_LOADING', true);
       return EmailService.getEmails()
-        .then(response => {
-          commit('SET_EMAILS', response.data)
+        .then((response) => {
+          commit('SET_EMAILS', response.data);
+          commit('SET_LOADING', false);
         })
-        .catch(error => {
-          throw error
-        })
+        .catch((error) => {
+          commit('SET_LOADING', false);
+          throw error;
+        });
     },
-    fetchEmail({ commit }, id) {  
-      const email = state.emails.find(email => email.id === id)
-      if (email) {
-        commit('SET_EMAIL', email)
-      } else {
-        return EmailService.getEmail(id)
-          .then(response => {
-            commit('SET_EMAIL', response.data)
-          })
-          .catch(error => {
-            throw error
-          })
+    fetchEmail({ commit }, id) {
+      const savedEmail = this.state.emails.find((email) => email.id === id);
+      if (savedEmail) {
+        commit('SET_EMAIL', savedEmail);
+        return savedEmail;
       }
-    }
-  }
-})
+      return EmailService.getEmail(id)
+        .then((response) => {
+          commit('SET_EMAIL', response.data);
+        })
+        .catch((error) => {
+          throw error;
+        });
+    },
+  },
+});
+
+// export default createStore({
+//   state: {
+//     emails: [],
+//     email: null,
+//   },
+//   mutations: {
+//     ADD_EMAIL(state, email) {
+//       state.emails.push(email);
+//     },
+//     SET_EMAILS(state, emails) {
+//       state.emails = emails;
+//     },
+//     SET_EMAIL(state, email) {
+//       state.email = email;
+//     },
+//   },
+//   actions: {
+//     createEmail({ commit }, email) {
+//       return EmailService.postEmail(email)
+//         .then(() => {
+//           commit('ADD_EMAIL', email);
+//           commit('SET_EMAIL', email);
+//         })
+//         .catch((error) => {
+//           throw error;
+//         });
+//     },
+//     fetchEmails({ commit }) {
+//       return EmailService.getEmails()
+//         .then((response) => {
+//           commit('SET_EMAILS', response.data);
+//         })
+//         .catch((error) => {
+//           throw error;
+//         });
+//     },
+//     fetchEmail({ commit }, id) {
+//       const savedEmail = this.state.emails.find((email) => email.id === id);
+//       if (savedEmail) {
+//         commit('SET_EMAIL', savedEmail);
+//         return savedEmail;
+//       }
+//       return EmailService.getEmail(id)
+//         .then((response) => {
+//           commit('SET_EMAIL', response.data);
+//         })
+//         .catch((error) => {
+//           throw error;
+//         });
+//     },
+//   },
+// });

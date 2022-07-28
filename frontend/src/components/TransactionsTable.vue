@@ -43,7 +43,7 @@
 export default {
   data() {
     return {
-      transactions: [
+      /* transactions: [
         {
           uid: 'sdfsdfsfsdsdf',
           from: 'ocanseypeter@gmail.com',
@@ -148,7 +148,7 @@ export default {
           status: 'Sent',
           date: 'Jul 18',
         },
-      ],
+      ], */
     };
   },
   methods: {
@@ -158,6 +158,11 @@ export default {
         name: 'TransactionDetailView',
         params: { id: transaction.uid },
       });
+    },
+  },
+  computed: {
+    transactions() {
+      return this.$store.state.emails;
     },
   },
 };

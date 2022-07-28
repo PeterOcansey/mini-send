@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import TransactionsView from '../views/TransactionsView.vue';
 import TransactionDetailView from '../views/TransactionDetailView.vue';
+import TransactionsErrorView from '../views/TransactionsErrorView.vue';
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,12 @@ const routes = [
     name: 'TransactionDetailView',
     props: true,
     component: TransactionDetailView,
+  },
+  {
+    path: '/error',
+    name: 'TransactionsErrorView',
+    props: true,
+    component: TransactionsErrorView,
   },
 ];
 
