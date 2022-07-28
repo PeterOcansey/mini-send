@@ -1,5 +1,7 @@
 <template>
-  <v-simple-table>
+  <v-simple-table
+  class="row-pointer"
+  >
     <template v-slot:default>
       <thead>
         <tr>
@@ -24,6 +26,7 @@
         <tr
           v-for="transaction in transactions"
           :key="transaction.uid"
+          @click="viewTransactionDetails(transaction)"
         >
           <td class="text-left">{{ transaction.from }}</td>
           <td class="text-left">{{ transaction.to }}</td>
@@ -148,5 +151,20 @@ export default {
       ],
     };
   },
+  methods: {
+    viewTransactionDetails(transaction) {
+      console.log(transaction);
+      this.$router.push({
+        name: "TransactionDetailView",
+        params: { transaction: transaction },
+      });
+    }
+  },
 };
 </script>
+
+<style lang="css" scoped>
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
+</style>
