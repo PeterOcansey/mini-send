@@ -13,10 +13,10 @@ export default {
   getEmailTransactions() {
     return apiClient.get('/emails')
   },
-  getEvent(id) {
+  getEmail(id) {
     return apiClient.get('/emails/' + id)
   },
-  postEvent(email) {
+  postEmail(email) {
     return apiClient.post('/emails', email)
   }
 }
