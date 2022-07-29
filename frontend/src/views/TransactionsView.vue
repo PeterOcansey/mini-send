@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import Loaders from '@/utils/constants';
 import TransactionsLoader from '../components/TransactionsLoader.vue';
 import TransactionsList from '../components/TransactionsList.vue';
 
@@ -14,7 +15,8 @@ export default {
     TransactionsList, TransactionsLoader,
   },
   created() {
-    this.$store.dispatch('fetchEmails')
+    this.$store.dispatch('setLoader', Loaders.PAGE_LOAD);
+    this.$store.dispatch('fetchEmails', { pageSize: 2 })
       .catch((error) => {
         console.log(error);
         this.$router.push({
@@ -28,7 +30,7 @@ export default {
       return this.$store.state.emails;
     },
     loading() {
-      return this.$store.state.loading;
+      return (this.$store.state.loading === Loaders.PAGE_LOAD);
     },
   },
 };

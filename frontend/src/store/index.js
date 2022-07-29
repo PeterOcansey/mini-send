@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import EmailService from '@/services/EmailService';
+import LOADERS from '@/utils/constants';
 
 Vue.use(Vuex);
 
@@ -8,7 +9,9 @@ export default new Vuex.Store({
   state: {
     emails: [],
     email: null,
-    loading: true,
+    loading: LOADERS.OFF,
+    response: null,
+    paginator: null,
   },
   mutations: {
     ADD_EMAIL(state, email) {
@@ -23,6 +26,17 @@ export default new Vuex.Store({
     SET_LOADING(state, status) {
       state.loading = status;
     },
+    SET_RESPONSE(state, response) {
+      state.response = response;
+    },
+    SET_PAGINATOR(state, paginator) {
+      state.paginator = paginator;
+    },
+  },
+  getters: {
+    getAllEmails: (state) => state.emails,
+    getResponse: (state) => state.response,
+    getPaginator: (state) => state.paginator,
   },
   actions: {
     createEmail({ commit }, email) {
@@ -35,16 +49,27 @@ export default new Vuex.Store({
           throw error;
         });
     },
-    fetchEmails({ commit }) {
-      commit('SET_LOADING', true);
-      return EmailService.getEmails()
+    fetchEmails({ commit }, params) {
+      return EmailService.getEmails(params)
         .then((response) => {
-          console.log(response.data.data.data);
+          console.log(response.data.data);
           commit('SET_EMAILS', response.data.data.data);
-          commit('SET_LOADING', false);
+          commit('SET_LOADING', LOADERS.OFF);
+          commit('SET_RESPONSE', response.data.data);
+          commit('SET_PAGINATOR', {
+            current_page: response.data.data.current_page,
+            first_page_url: response.data.data.first_page_url,
+            from: response.data.data.from,
+            last_page: response.data.data.last_page,
+            last_page_url: response.data.data.last_page_url,
+            per_page: response.data.data.per_page,
+            prev_page_url: response.data.data.prev_page_url,
+            to: response.data.data.to,
+            total: response.data.data.total,
+          });
         })
         .catch((error) => {
-          commit('SET_LOADING', false);
+          commit('SET_LOADING', LOADERS.OFF);
           throw error;
         });
     },
@@ -61,6 +86,9 @@ export default new Vuex.Store({
         .catch((error) => {
           throw error;
         });
+    },
+    setLoader({ commit }, status) {
+      commit('SET_LOADING', status);
     },
   },
 });

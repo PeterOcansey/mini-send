@@ -10,8 +10,8 @@ const apiClient = axios.create({
 });
 
 export default {
-  getEmails() {
-    return apiClient.get('/emails');
+  getEmails(params) {
+    return apiClient.get('/emails', { params });
   },
   getEmail(id) {
     return apiClient.get(`/emails/${id}`);

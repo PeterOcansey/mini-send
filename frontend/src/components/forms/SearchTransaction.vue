@@ -9,12 +9,14 @@
         id="mini-send-search-input-holder"
         >
           <v-text-field
-            v-model="firstname"
+            v-model="search_text"
             hide-details="true"
             placeholder="Search emails"
             prepend-icon="mdi-magnify"
             variant="plain"
+            clearable
             required
+            @keydown="searchKey"
           ></v-text-field>
         </v-col>
 
@@ -25,7 +27,7 @@
         id="mini-send-search-select-holder"
         >
         <v-combobox
-          v-model="select"
+          v-model="search_by"
           :items="items"
           hide-details="true"
           color="#4F4FDD"
@@ -37,17 +39,49 @@
 </template>
 
 <script>
+import Constants from '@/utils/constants';
+
 export default {
   data: () => ({
     valid: false,
-    firstname: '',
-    select: 'By Sender',
+    search_text: '',
+    search_by: 'SENDER',
     items: [
-      'By Sender',
-      'By Sender',
-      'By Subject',
+      'SENDER',
+      'RECIPIENT',
+      'SUBJECT',
     ],
   }),
+  methods: {
+    searchKey(value) {
+      if (value.code === Constants.SEARCH_KEY) {
+        if (this.search_text) {
+          this.fetchData(this.getSearchParams());
+        }
+      }
+    },
+    fetchData(params) {
+      this.$store.dispatch('setLoader', Constants.TABLE_FETCH_LOAD);
+      this.$store.dispatch('fetchEmails', params)
+        .catch((error) => {
+          this.$router.push({
+            name: 'TransactionsErrorView',
+            params: { error },
+          });
+        });
+    },
+    getSearchParams() {
+      let params = null;
+      if (this.search_by === 'SENDER') {
+        params = { from: this.search_text };
+      } else if (this.search_by === 'RECIPIENT') {
+        params = { to: this.search_text };
+      } else if (this.search_by === 'SUBJECT') {
+        params = { subject: this.search_text };
+      }
+      return params;
+    },
+  },
 };
 </script>
 

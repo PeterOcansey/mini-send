@@ -43,112 +43,6 @@
 export default {
   data() {
     return {
-      /* transactions: [
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-        {
-          uid: 'sdfsdfsfsdsdf',
-          from: 'ocanseypeter@gmail.com',
-          to: 'ptodeveloper18@gmail.com',
-          subject: 'Re: Ge the task done, Kid, before I chop off your head',
-          status: 'Sent',
-          date: 'Jul 18',
-        },
-      ], */
     };
   },
   methods: {
@@ -162,7 +56,7 @@ export default {
   },
   computed: {
     transactions() {
-      return this.$store.state.emails;
+      return this.$store.getters.getAllEmails;
     },
   },
 };
