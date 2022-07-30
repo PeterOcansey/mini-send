@@ -10,6 +10,7 @@ use App\MiniSend\Utils\Constants;
 use Illuminate\Http\Request;
 use App\MiniSend\Traits\ValidatorTrait;
 use App\MiniSEnd\Traits\EmailTrait;
+use App\Events\EmailPostedEvent;
 
 class EmailTransactionActivity 
 {
@@ -46,6 +47,8 @@ class EmailTransactionActivity
         // Create new email transaction record
         if( $emailTransaction = $this->emailTransactionRepo->saveEmailTransaction( $data ) )
         {
+            EmailPostedEvent::dispatch( $emailTransaction );
+
             return ApiResponse::success( "Email posted successfully!", ['data' => $emailTransaction] );
         }
 
