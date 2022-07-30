@@ -41,6 +41,7 @@ class EmailTransactionActivity
         if( $error_response ) return $error_response;
 
         $data['uid'] = $this->uid();
+        $data['status'] = Constants::STATUS_POSTED;
         
         // Create new email transaction record
         if( $emailTransaction = $this->emailTransactionRepo->saveEmailTransaction( $data ) )

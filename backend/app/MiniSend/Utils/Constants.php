@@ -12,6 +12,7 @@ class Constants
 	const STATUS_DISABLE = "DISABLED";
 	const STATUS_ACCEPTED = "ACCEPTED";
 	const STATUS_REJECTED = "REJECTED";
+	const STATUS_POSTED = "POSTED";
 
     const DEFAULT_PAGE_SIZE = 25;
 }
