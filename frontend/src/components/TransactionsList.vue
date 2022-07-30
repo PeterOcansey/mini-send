@@ -53,15 +53,19 @@
 
         </v-dialog>
       </v-row>
+
+      <TransactionCreateProgress v-if="creating" />
     </div>
 
 </template>
 
 <script>
+import Constants from '@/utils/constants';
 import TransactionsHolder from './TransactionsHolder.vue';
 import ButtonCompose from './forms/ButtonCompose.vue';
 import SearchTransaction from './forms/SearchTransaction.vue';
 import TransactionCompose from './TransactionCompose.vue';
+import TransactionCreateProgress from './progress/TransactionCreateProgress.vue';
 
 export default {
   data() {
@@ -81,10 +85,14 @@ export default {
     ButtonCompose,
     SearchTransaction,
     TransactionCompose,
+    TransactionCreateProgress,
   },
   computed: {
     emails() {
       return this.$store.state.emails;
+    },
+    creating() {
+      return (this.$store.state.loading === Constants.CREATE_LOAD);
     },
   },
   methods: {

@@ -12,7 +12,7 @@
 import Constants from '@/utils/constants';
 import TransactionsTable from './TransactionsTable.vue';
 import TransactionPaginator from './TransactionPaginator.vue';
-import TransactionFetchProgress from './TransactionFetchProgress.vue';
+import TransactionFetchProgress from './progress/TransactionFetchProgress.vue';
 
 export default {
   props: ['emails'],

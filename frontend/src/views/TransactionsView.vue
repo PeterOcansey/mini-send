@@ -16,7 +16,7 @@ export default {
   },
   created() {
     this.$store.dispatch('setLoader', Loaders.PAGE_LOAD);
-    this.$store.dispatch('fetchEmails', { pageSize: 2 })
+    this.$store.dispatch('fetchEmails')
       .catch((error) => {
         console.log(error);
         this.$router.push({

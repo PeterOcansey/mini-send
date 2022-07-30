@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_EMAIL(state, email) {
-      state.emails.push(email);
+      state.emails.unshift(email);
     },
     SET_EMAILS(state, emails) {
       state.emails = emails;
@@ -44,8 +44,10 @@ export default new Vuex.Store({
         .then(() => {
           commit('ADD_EMAIL', email);
           commit('SET_EMAIL', email);
+          commit('SET_LOADING', LOADERS.OFF);
         })
         .catch((error) => {
+          commit('SET_LOADING', LOADERS.OFF);
           throw error;
         });
     },
