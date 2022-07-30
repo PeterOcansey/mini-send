@@ -33,7 +33,7 @@ export default {
   methods: {
     pageChanged(value) {
       this.$store.dispatch('setLoader', Constants.TABLE_FETCH_LOAD);
-      this.$store.dispatch('fetchEmails', { pageSize: 4, page: value })
+      this.$store.dispatch('fetchEmails', { page: value })
         .catch((error) => {
           this.$router.push({
             name: 'TransactionsErrorView',
