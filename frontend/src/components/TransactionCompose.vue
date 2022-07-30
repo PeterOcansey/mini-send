@@ -3,7 +3,7 @@
     <v-card-title>
         <span class="text-h5">Compose Mail</span>
         <v-spacer></v-spacer>
-        
+
         <v-btn
         :style="textStyle"
         text
@@ -76,7 +76,7 @@
     <v-card-actions>
       <v-alert type="error" dense dismissible dark v-model="alert">
         {{ alertMessage }}
-      </v-alert> 
+      </v-alert>
       <v-spacer></v-spacer>
       <ButtonSubmit @submit="sendMail"/>
     </v-card-actions>
@@ -115,7 +115,13 @@ export default {
     },
     sendMail() {
       if (this.validRequestData()) {
-        let payload = {to:this.to,from:this.from,subject:this.subject,content_text:this.textMessage,content_html:this.htmlMessage};
+        const payload = {
+          to: this.to,
+          from: this.from,
+          subject: this.subject,
+          content_text: this.textMessage,
+          content_html: this.htmlMessage,
+        };
         this.hideDialog();
         this.$store.dispatch('setLoader', Constants.CREATE_LOAD);
         this.$store.dispatch('createEmail', payload)
@@ -126,25 +132,25 @@ export default {
               params: { error },
             });
           });
-      }else{
+      } else {
         this.alert = true;
       }
     },
     validRequestData() {
       if (!this.from) {
-        this.alertMessage = "Sender is required";
+        this.alertMessage = 'Sender is required';
         return false;
       }
       if (!this.to) {
-        this.alertMessage = "Recipient is required";
+        this.alertMessage = 'Recipient is required';
         return false;
       }
       if (!this.subject) {
-        this.alertMessage = "Subject is required";
+        this.alertMessage = 'Subject is required';
         return false;
       }
       if (!this.textMessage && !this.htmlMessage) {
-        this.alertMessage = "Content text or html is required";
+        this.alertMessage = 'Content text or html is required';
         return false;
       }
 
@@ -167,7 +173,7 @@ export default {
       this.subject = '';
       this.htmlMessage = '';
       this.textMessage = '';
-    }
+    },
   },
   computed: {
     textStyle() {

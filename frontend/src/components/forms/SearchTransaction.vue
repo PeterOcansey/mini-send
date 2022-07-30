@@ -17,6 +17,7 @@
             clearable
             required
             @keydown="searchKey"
+            @click:clear="resetSearch"
           ></v-text-field>
         </v-col>
 
@@ -31,6 +32,7 @@
           :items="items"
           hide-details="true"
           color="#4F4FDD"
+          @change="changed"
         ></v-combobox>
         </v-col>
       </v-row>
@@ -80,6 +82,14 @@ export default {
         params = { subject: this.search_text };
       }
       return params;
+    },
+    changed() {
+      if (this.search_text) {
+        this.fetchData(this.getSearchParams());
+      }
+    },
+    resetSearch() {
+      this.fetchData({});
     },
   },
 };
