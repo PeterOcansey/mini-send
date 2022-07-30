@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
 
       <SearchTransaction/>
-      <ButtonCompose/>
+      <ButtonCompose @start-compose-email="startComposeEmail"/>
 
       <!-- Tab bar holder-->
       <template v-slot:extension>
@@ -41,6 +41,18 @@
         <TransactionsHolder />
       </v-tab-item>
     </v-tabs-items>
+
+      <v-row justify="center">
+        <v-dialog
+          v-model="dialog"
+          persistent
+          max-width="960px"
+        >
+
+        <TransactionCompose @hide-dialog="hideDialog"/>
+
+        </v-dialog>
+      </v-row>
     </div>
 
 </template>
@@ -49,6 +61,7 @@
 import TransactionsHolder from './TransactionsHolder.vue';
 import ButtonCompose from './forms/ButtonCompose.vue';
 import SearchTransaction from './forms/SearchTransaction.vue';
+import TransactionCompose from './TransactionCompose.vue';
 
 export default {
   data() {
@@ -60,15 +73,26 @@ export default {
         'sent',
         'failed',
       ],
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      dialog: false,
     };
   },
   components: {
-    TransactionsHolder, ButtonCompose, SearchTransaction,
+    TransactionsHolder,
+    ButtonCompose,
+    SearchTransaction,
+    TransactionCompose,
   },
   computed: {
     emails() {
       return this.$store.state.emails;
+    },
+  },
+  methods: {
+    startComposeEmail() {
+      this.dialog = true;
+    },
+    hideDialog() {
+      this.dialog = false;
     },
   },
 };

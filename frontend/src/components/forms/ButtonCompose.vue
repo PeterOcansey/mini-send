@@ -6,6 +6,7 @@
       dark
       elevation="1"
       id="mini-send-btn-compose"
+      @click="startComposeEmail"
     >
       <v-icon left>
         mdi-pencil
@@ -13,6 +14,17 @@
       COMPOSE
     </v-btn>
 </template>
+
+<script>
+export default {
+  methods: {
+    startComposeEmail() {
+      console.log('Start compose message');
+      this.$emit('start-compose-email');
+    },
+  },
+};
+</script>
 
 <style>
 #mini-send-btn-compose {
