@@ -1,0 +1,1 @@
+{{ $email->content_text }}

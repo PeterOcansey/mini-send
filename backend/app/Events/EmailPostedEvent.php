@@ -15,7 +15,7 @@ class EmailPostedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $email;
+    public $email;
     /**
      * Create a new event instance.
      *

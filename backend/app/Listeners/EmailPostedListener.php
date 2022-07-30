@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPostedEmail;
 
 class EmailPostedListener
 {
@@ -28,7 +29,7 @@ class EmailPostedListener
     {
         if( $event->email )
         {
-            //Mail::to($event->editor_invite->email)->queue(new EditorInviteCreated($link));
+            Mail::to( $event->email->to )->queue( new SendPostedEmail( $event->email ) );
         }
     }
 }

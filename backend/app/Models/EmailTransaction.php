@@ -16,6 +16,14 @@ class EmailTransaction extends Model
         'created_at' => 'datetime'
     ];
 
+    protected $appends = ['is_html'];
+
+    public function getIsHtmlAttribute()
+	{
+		return ( $this->content_html ) ? true : false;
+
+	}
+
     public function getCreatedAtAttribute( $value )
     {
         $created_date = Carbon::parse( $value );
