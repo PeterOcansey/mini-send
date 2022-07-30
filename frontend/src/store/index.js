@@ -41,9 +41,9 @@ export default new Vuex.Store({
   actions: {
     createEmail({ commit }, email) {
       return EmailService.postEmail(email)
-        .then(() => {
-          commit('ADD_EMAIL', email);
-          commit('SET_EMAIL', email);
+        .then((response) => {
+          commit('ADD_EMAIL', response.data.data);
+          commit('SET_EMAIL', response.data.data);
           commit('SET_LOADING', LOADERS.OFF);
         })
         .catch((error) => {
