@@ -21,7 +21,7 @@ class EmailController extends Controller
     {
         try{
             
-            return $this->emailActivity->listTransactions( $request->post() );
+            return $this->emailActivity->listTransactions( $request->all() );
 
         }catch(\Exception $e){
 
