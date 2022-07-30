@@ -1,16 +1,17 @@
 <template>
-  <v-app>
+  <v-app class="blue">
     <router-view/>
   </v-app>
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #f5f6f7
 }
 
 nav {

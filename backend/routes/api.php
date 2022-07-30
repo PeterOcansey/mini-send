@@ -15,4 +15,7 @@ use App\Http\Controllers\EmailController;
 |
 */
 
+// Route::middleware(['cors'])->group(function () {
+    
+// });
 Route::resource('/emails', EmailController::class);
