@@ -25,6 +25,7 @@
           <v-tab
             v-for="item in items"
             :key="item"
+            @click="fetchList(item)"
           >
             {{ item }}
           </v-tab>
@@ -33,10 +34,11 @@
 
     </v-toolbar>
 
-    <v-tabs-items v-model="tab" id="mini-send-tab-items">
+    <v-tabs-items v-model="tab" id="mini-send-tab-items" vertical>
       <v-tab-item
         v-for="item in items"
         :key="item"
+        :transition="false"
       >
         <TransactionsHolder />
       </v-tab-item>
@@ -102,11 +104,27 @@ export default {
     hideDialog() {
       this.dialog = false;
     },
+    fetchList(item) {
+      let params = {};
+      if (item !== 'all') {
+        params = { status: item.toUpperCase() };
+      }
+
+      this.$store.dispatch('setLoader', Constants.TABLE_FETCH_LOAD);
+      this.$store.dispatch('fetchEmails', params)
+        .catch((error) => {
+          console.log(error);
+          this.$router.push({
+            name: 'TransactionsErrorView',
+            params: { error },
+          });
+        });
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 #mini-send-tab-items {
     background-color: transparent !important;
 }
