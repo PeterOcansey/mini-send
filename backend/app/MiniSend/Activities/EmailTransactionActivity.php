@@ -31,6 +31,11 @@ class EmailTransactionActivity
         return ApiResponse::success( "Email transactions retrieved successfully", ['data' => $transactions] );
     }
 
+    public function getEmailTransactionByUid( String $uid )
+    {
+        return  $this->emailTransactionRepo->getEmailTransactionByUid( $uid );
+    }
+
     public function sendEmail( Array $data )
     {
         //Validate request data
@@ -53,6 +58,22 @@ class EmailTransactionActivity
         }
 
         return ApiResponse::generalError( "Something went wrong while trying to post email" );
+    }
+
+    public function updateMailStatus( $id, $status )
+    {
+        $emailTransaction = $this->emailTransactionRepo->getEmailTransactionById( $id );
+        if( !$emailTransaction )
+        {
+            return Apiresponse::notFoundError( "Email transaction not found" );
+        }
+
+        if( $emailTransaction = $this->emailTransactionRepo->updateStatus( $emailTransaction, $status ) )
+        {
+            return ApiResponse::success( "Email status updated successfully!", ['data' => $emailTransaction] );
+        }
+
+        return ApiResponse::generalError( "Something went wrong while trying to update email status" );
     }
 
 }

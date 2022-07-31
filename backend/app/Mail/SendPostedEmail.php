@@ -31,6 +31,18 @@ class SendPostedEmail extends Mailable
      */
     public function build()
     {
-        return $this->email->is_html ? $this->view('emails.posted-html') :  $this->text('emails.posted-text');
+        $email = $this->email;
+
+        $this->withSwiftMessage(function ( $message ) use( $email ) {
+            $message->getHeaders()->addTextHeader(
+                'Mini-Send-UID', $email->uid
+            );
+        })
+        ->from($email->from)
+        ->subject($email->subject);
+
+        $email->is_html ? $this->view('emails.posted-html') :  $this->text('emails.posted-text');
+
+        return $this;
     }
 }

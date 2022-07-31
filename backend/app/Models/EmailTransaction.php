@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\MiniSend\Traits\EmailTrait;
 
 class EmailTransaction extends Model
 {
     use HasFactory;
+    use EmailTrait;
 
     protected $guarded = [];
 

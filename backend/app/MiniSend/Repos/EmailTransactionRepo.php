@@ -30,8 +30,20 @@ class EmailTransactionRepo
         return EmailTransaction::where( 'uid', $uid )->first();
     }
 
+    public function getEmailTransactionById( $id )
+    {
+        return EmailTransaction::find( $id );
+    }
+
     public function saveEmailTransaction( Array $data )
     {
         return EmailTransaction::create( $data );
+    }
+
+    public function updateStatus( EmailTransaction $emailTransaction, String $status )
+    {
+        $emailTransaction->status = $status;
+
+        return $emailTransaction->update();
     }
 }

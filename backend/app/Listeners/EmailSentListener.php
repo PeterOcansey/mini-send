@@ -4,14 +4,11 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use App\Mail\SendPostedEmail;
 use App\MiniSend\Activities\EmailTransactionActivity;
 use App\MiniSend\Utils\Constants;
 
-
-class EmailPostedListener implements ShouldQueue
+class EmailSentListener
 {
     private EmailTransactionActivity $emailActivity;
     /**
@@ -32,27 +29,15 @@ class EmailPostedListener implements ShouldQueue
      */
     public function handle( $event )
     {
-        if( $event->email )
-        {
-            Mail::to( $event->email->to )->send( new SendPostedEmail( $event->email ) );
-        }
-        
-    }
+        Log::info( $event->message );
+        Log::info( $event->data );
 
-    /**
-     * Handle a job failure.
-     *
-     * @param  \App\Events\OrderShipped  $event
-     * @param  \Throwable  $exception
-     * @return void
-     */
-    public function failed( $event, $exception )
-    {
-        Log::info( "Job Failed Event Exception" );
-        Log::info( $event->email );
-        if( $event->email )
+        //EmailTransactionActivity
+        $emailTransaction = $this->emailActivity->getEmailTransactionByUid( $event->message->message['Mini-Send-UID'] );
+        if( $emailTransaction )
         {
-            $event->email->status( Constants::STATUS_FAILED );
+            $emailTransaction->status( Constants::STATUS_SENT );
         }
+
     }
 }
