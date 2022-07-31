@@ -25,9 +25,9 @@ class EmailTransactionRepo
         return $predicate->orderBy('created_at', 'DESC')->paginate( $filters['pageSize'] ?? Constants::DEFAULT_PAGE_SIZE );
     }
 
-    public function getEmailTransactionByUid( String $uid )
+    public function getEmailTransactionByUid( $uid )
     {
-        return EmailTransaction::where( 'uid', $uid )->first();
+        return EmailTransaction::where('uid', $uid)->first();
     }
 
     public function getEmailTransactionById( $id )

@@ -9,7 +9,7 @@ class Constants
 
     const STATUS_PENDING = "PENDING";
 	const STATUS_POSTED = "POSTED";
-	const STATUS_SENT = "POSTED";
+	const STATUS_SENT = "SENT";
 	const STATUS_FAILED = "FAILED";
 
     const DEFAULT_PAGE_SIZE = 25;

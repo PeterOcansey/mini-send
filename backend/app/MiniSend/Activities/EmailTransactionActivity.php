@@ -31,7 +31,7 @@ class EmailTransactionActivity
         return ApiResponse::success( "Email transactions retrieved successfully", ['data' => $transactions] );
     }
 
-    public function getEmailTransactionByUid( String $uid )
+    public function getEmailTransactionByUid( $uid )
     {
         return  $this->emailTransactionRepo->getEmailTransactionByUid( $uid );
     }

@@ -29,11 +29,9 @@ class EmailSentListener
      */
     public function handle( $event )
     {
-        Log::info( $event->message );
-        Log::info( $event->data );
-
-        //EmailTransactionActivity
-        $emailTransaction = $this->emailActivity->getEmailTransactionByUid( $event->message->message['Mini-Send-UID'] );
+        $email_uid = $event->message->getHeaders()->get( 'Mini-Send-UID' )->getValue();
+        
+        $emailTransaction = $this->emailActivity->getEmailTransactionByUid( $email_uid );
         if( $emailTransaction )
         {
             $emailTransaction->status( Constants::STATUS_SENT );
