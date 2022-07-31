@@ -63,14 +63,28 @@
     </div>
 
     <vue-editor placeholder="Start typing..." v-model="htmlMessage" v-if="isHtml"/>
+
     <v-container fluid  v-if="isText">
-    <v-divider></v-divider>
-    <v-textarea
-      name="input-7-1"
-      auto-grow
-      placeholder="Start typing..."
-      v-model="textMessage"
-    ></v-textarea>
+      <v-divider></v-divider>
+      <v-textarea
+        name="input-7-1"
+        auto-grow
+        placeholder="Start typing..."
+        v-model="textMessage"
+      ></v-textarea>
+      <v-divider></v-divider>
+    </v-container>
+
+    <v-container fluid>
+        <v-file-input
+          small-chips
+          multiple
+          dense
+          placeholder="Select your files"
+          v-model="files"
+          color="deep-purple accent-4"
+        ></v-file-input>
+        <v-divider></v-divider>
     </v-container>
 
     <v-card-actions>
@@ -102,6 +116,7 @@ export default {
       contentType: Constants.CONTENT_HTML,
       alert: false,
       alertMessage: '',
+      files: [],
     };
   },
   components: {
@@ -114,27 +129,28 @@ export default {
       this.$emit('hide-dialog');
     },
     sendMail() {
-      if (this.validRequestData()) {
-        const payload = {
-          to: this.to,
-          from: this.from,
-          subject: this.subject,
-          content_text: this.textMessage,
-          content_html: this.htmlMessage,
-        };
-        this.hideDialog();
-        this.$store.dispatch('setLoader', Constants.CREATE_LOAD);
-        this.$store.dispatch('createEmail', payload)
-          .catch((error) => {
-            console.log(error);
-            this.$router.push({
-              name: 'TransactionsErrorView',
-              params: { error },
-            });
-          });
-      } else {
-        this.alert = true;
-      }
+      console.log(this.files);
+      // if (this.validRequestData()) {
+      //   const payload = {
+      //     to: this.to,
+      //     from: this.from,
+      //     subject: this.subject,
+      //     content_text: this.textMessage,
+      //     content_html: this.htmlMessage,
+      //   };
+      //   this.hideDialog();
+      //   this.$store.dispatch('setLoader', Constants.CREATE_LOAD);
+      //   this.$store.dispatch('createEmail', payload)
+      //     .catch((error) => {
+      //       console.log(error);
+      //       this.$router.push({
+      //         name: 'TransactionsErrorView',
+      //         params: { error },
+      //       });
+      //     });
+      // } else {
+      //   this.alert = true;
+      // }
     },
     validRequestData() {
       if (!this.from) {
@@ -173,6 +189,7 @@ export default {
       this.subject = '';
       this.htmlMessage = '';
       this.textMessage = '';
+      this.files = [];
     },
   },
   computed: {

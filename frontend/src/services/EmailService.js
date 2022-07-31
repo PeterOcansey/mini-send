@@ -16,7 +16,7 @@ export default {
   getEmail(id) {
     return apiClient.get(`/emails/${id}`);
   },
-  postEmail(email) {
-    return apiClient.post('/emails', email);
+  postEmail(payload) {
+    return apiClient.post('/emails', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
   },
 };
