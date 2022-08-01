@@ -31,16 +31,11 @@ class EmailController extends Controller
         }
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         try{
             
-            return $this->emailActivity->sendEmail( $request->post() );
+            return $this->emailActivity->sendEmail( $request );
 
         }catch(\Exception $e){
 
@@ -50,23 +45,17 @@ class EmailController extends Controller
         }
     }
 
-    public function show(EmailTransaction $emailTransaction)
+    public function show( Request $request, $uid )
     {
-        //
-    }
+        try{
+            
+            return $this->emailActivity->getEmailTransaction( $uid );
 
-    public function edit(EmailTransaction $emailTransaction)
-    {
-        //
-    }
+        }catch(\Exception $e){
 
-    public function update(Request $request, EmailTransaction $emailTransaction)
-    {
-        //
-    }
+            ErrorEvents::ServerErrorOccurred($e);
+            return ApiResponse::serverError();
 
-    public function destroy(EmailTransaction $emailTransaction)
-    {
-        //
+        }
     }
 }

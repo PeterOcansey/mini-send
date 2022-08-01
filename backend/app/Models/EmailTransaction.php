@@ -31,4 +31,9 @@ class EmailTransaction extends Model
         $created_date = Carbon::parse( $value );
         return $created_date->isToday() ? $created_date->format('g:i A') : $created_date->format('M d');
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'email_transaction_id');
+    }
 }

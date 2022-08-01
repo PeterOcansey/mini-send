@@ -22,7 +22,7 @@ class EmailTransactionRepo
             $predicate->where( $key, $filter );
          }
 
-        return $predicate->orderBy('created_at', 'DESC')->paginate( $filters['pageSize'] ?? Constants::DEFAULT_PAGE_SIZE );
+        return $predicate->with('attachments')->orderBy('created_at', 'DESC')->paginate( $filters['pageSize'] ?? Constants::DEFAULT_PAGE_SIZE );
     }
 
     public function getEmailTransactionByUid( $uid )

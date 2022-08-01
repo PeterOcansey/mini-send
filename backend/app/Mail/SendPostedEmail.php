@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\EmailTransaction;
+use Illuminate\Support\Facades\Log;
 
 class SendPostedEmail extends Mailable
 {
@@ -41,6 +42,17 @@ class SendPostedEmail extends Mailable
         ->from($email->from)
         ->subject($email->subject);
 
+        $attachments = $email->attachments;
+        if($attachments && count( $attachments ) > 0)
+        {
+            //Add attachments to email
+            foreach ( $attachments as $attachment ) 
+            {
+                $this->attachFromStorageDisk( 'public', '/'.$attachment->file_name);
+            }
+        }
+
+        //Set display as html or text
         $email->is_html ? $this->view('emails.posted-html') :  $this->text('emails.posted-text');
 
         return $this;

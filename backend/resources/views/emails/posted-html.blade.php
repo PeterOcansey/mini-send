@@ -1,1 +1,1 @@
-{{ $email->content_html }}
+{!! $email->content_html !!}
