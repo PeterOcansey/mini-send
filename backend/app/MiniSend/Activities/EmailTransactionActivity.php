@@ -29,6 +29,14 @@ class EmailTransactionActivity
         $this->attachmentRepo = $attachmentRepo;
     }
 
+
+    /**
+     * Get Transactions
+     * 
+     * @method listTransactions( Array $filters )
+     * 
+     * @return Response( Array[ EmailTransaction] )
+     */
     public function listTransactions( $filters )
     {        
         $transactions = $this->emailTransactionRepo->getTransactionsPaginated( $filters );
@@ -36,25 +44,19 @@ class EmailTransactionActivity
         foreach( $transactions as $key => $transaction )
         {
             //Generate attachemnt urls
-            $attachment_urls = [];
-            $attachments = $transaction->attachments;
-            if( $attachments && count( $attachments ) > 0 )
-            {
-                foreach( $attachments as $attachment )
-                {
-                    array_push( $attachment_urls, env('APP_URL') . "/storage/" . $attachment->file_name );
-                }
-            }
-            
-            $transaction['attachment_urls'] = $attachment_urls;
-
-            //Remove the attachments object from the transacitonn
-            unset( $transaction['attachments'] );
+            $transaction->getAttachments();
         }
 
         return ApiResponse::success( "Email transactions retrieved successfully", ['data' => $transactions] );
     }
 
+    /**
+     * Get Transaction By UID
+     * 
+     * @method getEmailTransaction( String $uid )
+     * 
+     * @return Response( EmailTransaction )
+     */
     public function getEmailTransaction( $uid )
     {
         $transaction = $this->getEmailTransactionByUid( $uid );
@@ -65,33 +67,34 @@ class EmailTransactionActivity
         }
         
         //Generate attachemnt urls
-        $attachment_urls = [];
-        $attachments = $transaction->attachments;
-        if( $attachments && count( $attachments ) > 0 )
-        {
-            foreach( $attachments as $attachment )
-            {
-                array_push( $attachment_urls, env('APP_URL') . "/storage/" . $attachment->file_name );
-            }
-        }
-        
-        $transaction['attachment_urls'] = $attachment_urls;
-
-        //Remove the attachments object from the transacitonn
-        unset( $transaction['attachments'] );
+        $transaction->getAttachments();
 
         return ApiResponse::success( "Email transaction retrieved successfully", ["data" => $transaction] );
     }
+
+    /**
+     * Get Transaction By UID
+     * 
+     * @method getEmailTransactionByUid( String $uid )
+     * 
+     * @return EmailTransaction
+     */
 
     public function getEmailTransactionByUid( $uid )
     {
         return  $this->emailTransactionRepo->getEmailTransactionByUid( $uid );
     }
 
+
+     /**
+     * Post an email
+     * 
+     * @method sendEmail( Request $request )
+     * 
+     * @return Response( EmailTransaction )
+     */
     public function sendEmail( Request $request )
     {
-        Log::info( $request );
-
         $data = $request->post();
 
         //Validate request data
@@ -105,24 +108,19 @@ class EmailTransactionActivity
         //Initialize uid and status data
         $data['uid'] = $this->uid();
         $data['status'] = Constants::STATUS_POSTED;
-        $attachment_urls = [];
         
         // Create new email transaction record
         if( $emailTransaction = $this->emailTransactionRepo->saveEmailTransaction( $data ) )
         {
+            //Process and Save attachements
             if ( $request->hasFile( 'attachments' ) ) 
             {
                 $attachments = $this->processAttachments( $request );
-                $attachments = $this->attachmentRepo->saveAttachments( $attachments, $emailTransaction->id );
-
-                //Get url to saved attachemnts
-                foreach( $attachments as $attachment )
-                {
-                   array_push( $attachment_urls, env('APP_URL') . "/storage/" . $attachment->file_name );
-                }
+                $this->attachmentRepo->saveAttachments( $attachments, $emailTransaction->id );
             }
 
-            $emailTransaction['attachment_urls'] = $attachment_urls;
+            //Get attachment urls
+            $emailTransaction->getAttachments();
 
             //Broadcast an email has been posted event
             EmailPostedEvent::dispatch( $emailTransaction );

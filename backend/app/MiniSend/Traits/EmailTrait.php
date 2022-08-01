@@ -26,5 +26,24 @@
 
         }
 
+        public function getAttachments()
+        {
+            //Generate attachemnt urls
+            $attachment_urls = [];
+            $attachments = $this->attachments;
+            if( $attachments && count( $attachments ) > 0 )
+            {
+                foreach( $attachments as $attachment )
+                {
+                    array_push( $attachment_urls, env('APP_URL') . "/storage/" . $attachment->file_name );
+                }
+            }
+            
+            $this['attachment_urls'] = $attachment_urls;
+
+            //Remove the attachments object from the transaciton
+            unset( $this['attachments'] );
+        }
+
     }
 ?>
