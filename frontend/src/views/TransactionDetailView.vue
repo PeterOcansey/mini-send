@@ -30,8 +30,8 @@
         sm="6"
         md="8"
         >
-        <div v-html="email.content_html" v-if="email.is_html"></div>
-        <div v-if="email.is_html !== true">
+        <div v-html="email.content_html" v-if="email.is_html" class="content-holder"></div>
+        <div v-if="email.is_html !== true" class="content-holder">
           {{ email.content_text }}
         </div>
 
@@ -122,5 +122,8 @@ margin-top: 10px;
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
+}
+.content-holder {
+  padding-right: 50px !important;
 }
 </style>
