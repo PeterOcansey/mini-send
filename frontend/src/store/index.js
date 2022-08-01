@@ -37,11 +37,13 @@ export default new Vuex.Store({
     getAllEmails: (state) => state.emails,
     getResponse: (state) => state.response,
     getPaginator: (state) => state.paginator,
+    getEmail: (state) => state.email,
   },
   actions: {
     createEmail({ commit }, email) {
       return EmailService.postEmail(email)
         .then((response) => {
+          console.log(response);
           commit('ADD_EMAIL', response.data.data);
           commit('SET_EMAIL', response.data.data);
           commit('SET_LOADING', LOADERS.OFF);
@@ -76,14 +78,14 @@ export default new Vuex.Store({
         });
     },
     fetchEmail({ commit }, id) {
-      const savedEmail = this.state.emails.find((email) => email.id === id);
+      const savedEmail = this.state.emails.find((email) => email.uid === id);
       if (savedEmail) {
         commit('SET_EMAIL', savedEmail);
         return savedEmail;
       }
       return EmailService.getEmail(id)
         .then((response) => {
-          commit('SET_EMAIL', response.data);
+          commit('SET_EMAIL', response.data.data);
         })
         .catch((error) => {
           throw error;

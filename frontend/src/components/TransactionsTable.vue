@@ -50,7 +50,7 @@ export default {
       console.log(transaction);
       this.$router.push({
         name: 'TransactionDetailView',
-        params: { id: transaction.uid },
+        params: { id: transaction.uid, email_transaction: transaction },
       });
     },
   },

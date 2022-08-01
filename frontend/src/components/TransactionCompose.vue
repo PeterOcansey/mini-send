@@ -129,28 +129,31 @@ export default {
       this.$emit('hide-dialog');
     },
     sendMail() {
-      console.log(this.files);
-      // if (this.validRequestData()) {
-      //   const payload = {
-      //     to: this.to,
-      //     from: this.from,
-      //     subject: this.subject,
-      //     content_text: this.textMessage,
-      //     content_html: this.htmlMessage,
-      //   };
-      //   this.hideDialog();
-      //   this.$store.dispatch('setLoader', Constants.CREATE_LOAD);
-      //   this.$store.dispatch('createEmail', payload)
-      //     .catch((error) => {
-      //       console.log(error);
-      //       this.$router.push({
-      //         name: 'TransactionsErrorView',
-      //         params: { error },
-      //       });
-      //     });
-      // } else {
-      //   this.alert = true;
-      // }
+      if (this.validRequestData()) {
+        const formData = new FormData();
+        formData.append('to', this.to);
+        formData.append('from', this.from);
+        formData.append('subject', this.subject);
+        formData.append('content_text', this.textMessage);
+        formData.append('content_html', this.htmlMessage);
+
+        Object.keys(this.files).forEach((key) => {
+          formData.append('attachments[]', this.files[key]);
+        });
+
+        this.hideDialog();
+        this.$store.dispatch('setLoader', Constants.CREATE_LOAD);
+        this.$store.dispatch('createEmail', formData)
+          .catch((error) => {
+            console.log(error);
+            this.$router.push({
+              name: 'TransactionsErrorView',
+              params: { error },
+            });
+          });
+      } else {
+        this.alert = true;
+      }
     },
     validRequestData() {
       if (!this.from) {

@@ -18,10 +18,10 @@
   <v-container ma-200 id="mini-send-transaction-detail-holder">
     <BackButton/>
     <p class="mini-send-transaction-detail-subject">
-      Re: Get the task done, Kid, before I chop off your head.
+      {{ email.subject }}
     </p>
-    <p class="mini-send-transaction-detail-address">Peter Ocansey</p>
-    <p class="mini-send-transaction-detail-address">To: ocanseypeter@gmail.com</p>
+    <p class="mini-send-transaction-detail-address">From: {{ email.from }}</p>
+    <p class="mini-send-transaction-detail-address">To: {{ email.to }}</p>
     <v-divider></v-divider>
 
     <v-row id="mini-send-transaction-details-grid-content-holder">
@@ -30,7 +30,11 @@
         sm="6"
         md="8"
         >
-        <p>Holder 1</p>
+        <div v-html="email.content_html" v-if="email.is_html"></div>
+        <div v-if="email.is_html !== true">
+          {{ email.content_text }}
+        </div>
+
         </v-col>
 
         <v-col
@@ -60,16 +64,35 @@ export default {
     };
   },
   components: { ButtonCompose, BackButton },
+  created() {
+    this.$store.dispatch('fetchEmail', this.id)
+      .catch((error) => {
+        console.log(error);
+        this.$router.push({
+          name: 'TransactionsErrorView',
+          params: { error },
+        });
+      });
+  },
+  computed: {
+    email() {
+      return this.$store.state.email;
+    },
+  },
 };
 </script>
 
 <style scoped>
+#app {
+  text-align: justify !important;
+}
 #mini-send-transaction-detail-holder p{
   text-align: justify;
   margin-bottom: 0px !important;
 }
 #mini-send-transaction-details-grid-content-holder {
   margin: 35px 0px 0px 0px;
+  text-align: justify !important;
 }
 .mini-send-transaction-detail-subject {
   font-size: 20px;
