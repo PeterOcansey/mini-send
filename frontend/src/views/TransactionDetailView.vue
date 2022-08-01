@@ -42,7 +42,8 @@
         sm="6"
         md="4"
         >
-        <p>Attachments</p>
+        <p>{{ attachmentCount }} Attachments</p>
+        <TransactionAttachments v-if="attachmentCount > 0"/>
         </v-col>
       </v-row>
 
@@ -55,6 +56,7 @@
 <script>
 import BackButton from '@/components/forms/BackButton.vue';
 import ButtonCompose from '../components/forms/ButtonCompose.vue';
+import TransactionAttachments from '../components/TransactionAttachments.vue';
 
 export default {
   props: ['id'],
@@ -63,7 +65,7 @@ export default {
 
     };
   },
-  components: { ButtonCompose, BackButton },
+  components: { ButtonCompose, BackButton, TransactionAttachments },
   created() {
     this.$store.dispatch('fetchEmail', this.id)
       .catch((error) => {
@@ -77,6 +79,9 @@ export default {
   computed: {
     email() {
       return this.$store.state.email;
+    },
+    attachmentCount() {
+      return this.$store.state.email.attachment_urls.length;
     },
   },
 };

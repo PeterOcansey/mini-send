@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     viewTransactionDetails(transaction) {
-      console.log(transaction);
       this.$router.push({
         name: 'TransactionDetailView',
         params: { id: transaction.uid, email_transaction: transaction },

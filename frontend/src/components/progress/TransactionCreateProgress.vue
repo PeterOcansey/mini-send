@@ -10,7 +10,7 @@
         dark
       >
         <v-card-text>
-          Please stand by
+          On the way...
           <v-progress-linear
             indeterminate
             color="white"

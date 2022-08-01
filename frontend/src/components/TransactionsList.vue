@@ -11,8 +11,8 @@
 
       <v-spacer></v-spacer>
 
-      <SearchTransaction/>
-      <ButtonCompose @start-compose-email="startComposeEmail"/>
+      <SearchTransaction class="hidden-sm-and-down" />
+      <ButtonCompose @start-compose-email="startComposeEmail" class="hidden-sm-and-down" />
 
       <!-- Tab bar holder-->
       <template v-slot:extension>
