@@ -1,4 +1,4 @@
-# frontend
+# MINI SEND FRONT END SERVICE
 
 ## Project setup
 ```
